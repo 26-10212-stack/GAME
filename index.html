@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monster Chess Tactics (몬스터 체스)</title>
+  <link rel="stylesheet" href="style.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Noto+Sans+KR:wght@400;600;700;800&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <div id="game-container">
+    <!-- Header: Stage, Round, Timer, Player Info -->
+    <header id="game-header">
+      <div class="player-stats">
+        <div class="stat-badge hp"><span class="icon">❤️</span> <span id="player-hp">100</span> HP</div>
+        <div class="stat-badge gold"><span class="icon">💰</span> <span id="player-gold">100</span> G</div>
+        <div class="stat-badge streak"><span class="icon">🔥</span> <span id="win-streak">0연승</span></div>
+      </div>
+
+      <div class="stage-info">
+        <div class="stage-tag" id="stage-round-display">스테이지 1-1 (준비 단계)</div>
+        <div class="timer-bar-wrap">
+          <div id="round-timer-bar"></div>
+        </div>
+        <div id="timer-text">준비 시간: 20초</div>
+      </div>
+
+      <div class="header-controls">
+        <div class="stat-badge exp-badge">
+          Lv.<span id="player-lvl">1</span>
+          <span class="exp-text">(<span id="player-exp">0</span>/<span id="player-max-exp">2</span>)</span>
+        </div>
+        <button id="btn-buy-xp" class="btn-action">
+          <span>레벨 업</span>
+          <small>4G (+4 EXP)</small>
+        </button>
+        <button id="btn-ready-combat" class="btn-action primary">
+          <span>전투 시작</span>
+          <small>즉시 진행 ⚔️</small>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Battlefield & Synergies -->
+    <main id="game-arena">
+      <!-- Synergy Panel -->
+      <aside id="synergy-panel">
+        <div class="panel-title">활성 시너지</div>
+        <div id="synergy-list">
+          <!-- Dynamically filled -->
+          <div class="empty-synergy">체스를 배치하여 시너지를 활성화하세요!</div>
+        </div>
+
+        <div class="combat-dps-panel" id="combat-dps-panel" style="display: none;">
+          <div class="panel-title">전투 피해량</div>
+          <div id="dps-list"></div>
+        </div>
+      </aside>
+
+      <!-- Combat Arena Board -->
+      <div id="arena-board-wrap">
+        <!-- Enemy Side (Top) -->
+        <div class="board-side enemy-side">
+          <div class="side-label">적 진영 (STAGE BOSS / ENEMY)</div>
+          <div class="grid-board" id="enemy-board">
+            <!-- 8x4 Grid for Enemy -->
+          </div>
+        </div>
+
+        <!-- Player Side (Bottom) -->
+        <div class="board-side player-side">
+          <div class="side-label">아군 진영 (배치 가능: <span id="placed-units-count">0</span> / <span
+              id="max-units-count">1</span>)</div>
+          <div class="grid-board" id="player-board">
+            <!-- 8x4 Grid for Player -->
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Bench (대기석) & Sell Zone -->
+    <section id="bench-section">
+      <div class="bench-header-row">
+        <div class="bench-label">대기석 (최대 8기)</div>
+        <div id="sell-dropzone" class="sell-dropzone">
+          <span class="icon">💰</span>
+          <span id="sell-text">유닛을 여기로 드래그하여 판매</span>
+        </div>
+      </div>
+      <div class="bench-grid" id="player-bench">
+        <!-- 8 Bench Slots -->
+      </div>
+    </section>
+
+    <!-- Shop (상점) -->
+    <footer id="shop-section">
+      <div class="shop-controls">
+        <button id="btn-reroll" class="btn-shop">
+          <span class="icon">🎲</span> 새로고침
+          <small>2 골드</small>
+        </button>
+        <button id="btn-lock-shop" class="btn-shop">
+          <span class="icon" id="lock-icon">🔓</span> 상점 잠금
+        </button>
+      </div>
+
+      <div class="shop-cards" id="shop-cards-container">
+        <!-- 5 Unit Cards -->
+      </div>
+    </footer>
+  </div>
+
+  <!-- Unit Info / Hover Tooltip Modal -->
+  <div id="unit-tooltip" class="unit-tooltip" style="display: none;"></div>
+
+  <!-- End Game Modal -->
+  <div id="modal-gameover" class="modal-overlay" style="display: none;">
+    <div class="modal-card">
+      <h2 id="gameover-title">게임 종료</h2>
+      <p id="gameover-desc">당신의 최종 기록</p>
+      <div class="final-stats">
+        <div>도달 스테이지: <span id="stat-final-stage">1-1</span></div>
+        <div>처치한 적 유닛: <span id="stat-final-kills">0</span></div>
+      </div>
+      <button id="btn-restart" class="btn-action primary">다시 시작하기</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
